@@ -1,6 +1,5 @@
 <?php
-
-include 'config/database.php';
+include '../includes/database.php';
 
 $title = $_POST['title'];
 $description = $_POST['description'];

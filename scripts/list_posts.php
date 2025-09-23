@@ -1,5 +1,5 @@
 <?php
-include 'config/database.php';
+include '../includes/database.php';
 
 session_start();
 $_SESSION['user_id'] = 1;
