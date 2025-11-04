@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/nav.css">
+    <link rel="stylesheet" href="styles/nav.css">
 </head>
 <body>
     <nav class="navbar" id="navbar">
         <div class="navbar-container">
         <a href="#" class="navbar-logo">
-            <span>Blogs</span>
+            <span>Bloggy</span>
         </a>
         
         <ul class="navbar-menu">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Button 2</a></li>
-            <li><a href="#">Button 3</a></li>
-            <li><a href="#">Button 4</a></li>
-            <li><a href="#">Button 5</a></li>
+            <li><a href="hub.php" class="active">Home</a></li>
+            <li><a href="#">Create</a></li>
+            <li><a href="#">Find</a></li>
+            <li><a href="#">Manage</a></li>
         </ul>
 
         <div class="navbar-actions">

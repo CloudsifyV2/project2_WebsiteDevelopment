@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/login.css">
+    <link rel="stylesheet" href="styles/login.css">
     <title>Bloggy</title>
 </head>
 <body>
@@ -13,7 +13,7 @@
             <p class="description">Enter your credentials to access your account</p>
         </header>
 
-        <form class="login-form" action="do_login_check.php" method="POST">
+        <form class="login-form" action="DO/do_login_check.php" method="POST">
             <label class="subtitle" for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <br>
@@ -22,7 +22,7 @@
             <br>
             <button type="submit">Login</button>
 
-            <p class="reghere">Don't have an account? <a href="/register.php"><span>Register Here</span></a></p>
+            <p class="reghere">Don't have an account? <a href="register.php"><span>Register Here</span></a></p>
         </form>
     </div>
 </body>

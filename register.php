@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/login.css">
+    <link rel="stylesheet" href="styles/login.css">
     <title>Bloggy</title>
 </head>
 <body>
@@ -13,7 +13,10 @@
             <p class="description">Enter the required information to create your account</p>
         </header>
 
-        <form class="login-form" action="/login" method="POST">
+        <form class="login-form" action="DO/do_register.php" method="POST">
+            <label class="subtitle" for="email">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter a username" required>
+            <br>
             <label class="subtitle" for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <br>
@@ -25,7 +28,7 @@
             <br>
             <button type="submit">Register</button>
 
-            <p class="reghere">Already have an account? <a href="/login.php"><span>Login Here</span></a></p>
+            <p class="reghere">Already have an account? <a href="login.php"><span>Login Here</span></a></p>
         </form>
     </div>
 </body>
