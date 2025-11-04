@@ -57,7 +57,7 @@ function slugify($text) {
         while ($post = $result->fetch_assoc()) {
             $tagsArray = explode(',', $post['tags']);
             $slug = slugify($post['title']);
-            $url = "content.php?id={$post['id']}&slug={$slug}";
+            $url = "post_content.php?id={$post['id']}&slug={$slug}";
             $author = $post['author_name'] ?? 'Unknown Author';
             ?>
             <article class="blog-card" data-tags="<?php echo htmlspecialchars($post['tags']); ?>" onclick="window.location='<?php echo $url; ?>'">
