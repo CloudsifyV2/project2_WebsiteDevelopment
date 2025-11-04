@@ -5,7 +5,7 @@ include 'components/navbar.php';
 
 // Function to create a URL-friendly slug
 function slugify($text) {
-    $text = preg_replace('~[^\pL\d]+~u', '-', $text); // replace non letters/digits by -
+    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
     $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
     $text = preg_replace('~[^-\w]+~', '', $text);
     $text = trim($text, '-');
@@ -17,49 +17,124 @@ function slugify($text) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/hub.css">
-    <title>Bloggy</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/hub.css">
+  <title>Bloggy</title>
 </head>
 <body>
 <main class="container">
-    <div class="blog-grid">
-        <?php
-        $sql = "SELECT * FROM posts ORDER BY date_posted DESC";
-        $result = $conn->query($sql);
 
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $tagsArray = explode(',', $row['tags']);
-                $slug = slugify($row['title']);
-                $url = "post_content.php?id={$row['id']}&slug={$slug}";
-                ?>
-                <article class="blog-card" data-tags="<?php echo htmlspecialchars($row['tags']); ?>" onclick="window.location='<?php echo $url; ?>'">
-                    <div class="blog-card-image-container">
-                        <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['title']); ?>" class="blog-card-image">
-                    </div>
-                    <div class="blog-card-header">
-                        <div class="blog-card-tags">
-                            <?php foreach ($tagsArray as $t): ?>
-                                <span class="card-tag"><?php echo trim($t); ?></span>
-                            <?php endforeach; ?>
-                        </div>
-                        <h2 class="blog-card-title"><?php echo htmlspecialchars($row['title']); ?></h2>
-                    </div>
-                    <div class="blog-card-content">
-                        <p class="blog-card-excerpt"><?php echo htmlspecialchars($row['excerpt']); ?></p>
-                        <p class="blog-card-date"><?php echo date('F j, Y', strtotime($row['date_posted'])); ?></p>
-                    </div>
-                </article>
-                <?php
-            }
-        } else {
-            echo '<p>No posts found.</p>';
-        }
-        $conn->close();
-        ?>
+  <!-- Tag Filter -->
+  <div class="filter-section">
+    <h3>Filter by Tag</h3>
+    <div class="tag-filters" id="tagFilters">
+      <span class="tag-badge active" data-tag="">All Posts</span>
+      <span class="tag-badge inactive" data-tag="Technology">Technology</span>
+      <span class="tag-badge inactive" data-tag="Web Development">Web Development</span>
+      <span class="tag-badge inactive" data-tag="Design">Design</span>
+      <span class="tag-badge inactive" data-tag="UX">UX</span>
+      <span class="tag-badge inactive" data-tag="Travel">Travel</span>
+      <span class="tag-badge inactive" data-tag="Lifestyle">Lifestyle</span>
+      <span class="tag-badge inactive" data-tag="Food">Food</span>
+      <span class="tag-badge inactive" data-tag="Fitness">Fitness</span>
+      <span class="tag-badge inactive" data-tag="Business">Business</span>
     </div>
+  </div>
+
+  <!-- Blog Posts Grid -->
+  <div class="blog-grid" id="blogGrid">
+    <?php
+    $sql = "
+      SELECT posts.*, users.username AS author_name 
+      FROM posts
+      LEFT JOIN users ON posts.author_id = users.id
+      ORDER BY date_posted DESC
+    ";
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        while ($post = $result->fetch_assoc()) {
+            $tagsArray = explode(',', $post['tags']);
+            $slug = slugify($post['title']);
+            $url = "content.php?id={$post['id']}&slug={$slug}";
+            $author = $post['author_name'] ?? 'Unknown Author';
+            ?>
+            <article class="blog-card" data-tags="<?php echo htmlspecialchars($post['tags']); ?>" onclick="window.location='<?php echo $url; ?>'">
+              <div class="blog-card-image-container">
+                <img src="<?php echo htmlspecialchars($post['image_url']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" class="blog-card-image">
+              </div>
+              <div class="blog-card-header">
+                <div class="blog-card-tags">
+                  <?php foreach ($tagsArray as $t): ?>
+                    <span class="card-tag"><?php echo trim(htmlspecialchars($t)); ?></span>
+                  <?php endforeach; ?>
+                </div>
+                <h2 class="blog-card-title"><?php echo htmlspecialchars($post['title']); ?></h2>
+                <p class="blog-card-author">By <?php echo htmlspecialchars($author); ?></p>
+              </div>
+              <div class="blog-card-content">
+                <p class="blog-card-excerpt"><?php echo htmlspecialchars($post['excerpt']); ?></p>
+                <p class="blog-card-date"><?php echo date('F j, Y', strtotime($post['date_posted'])); ?></p>
+              </div>
+            </article>
+            <?php
+        }
+    } else {
+        echo '<p>No posts found.</p>';
+    }
+
+    $conn->close();
+    ?>
+  </div>
+
+  <div class="no-results hidden" id="noResults">
+    <p>No posts found with the selected tag.</p>
+  </div>
+
 </main>
+
+<script>
+  // Tag filtering functionality
+  const tagFilters = document.querySelectorAll('.tag-badge');
+  const blogCards = document.querySelectorAll('.blog-card');
+  const blogGrid = document.getElementById('blogGrid');
+  const noResults = document.getElementById('noResults');
+
+  tagFilters.forEach(badge => {
+    badge.addEventListener('click', () => {
+      const selectedTag = badge.getAttribute('data-tag');
+
+      // Update active state
+      tagFilters.forEach(b => {
+        b.classList.remove('active');
+        b.classList.add('inactive');
+      });
+      badge.classList.add('active');
+      badge.classList.remove('inactive');
+
+      // Filter blog cards
+      let visibleCount = 0;
+      blogCards.forEach(card => {
+        const cardTags = card.getAttribute('data-tags').split(',');
+        if (selectedTag === '' || cardTags.includes(selectedTag)) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Show/hide no results message
+      if (visibleCount === 0) {
+        blogGrid.classList.add('hidden');
+        noResults.classList.remove('hidden');
+      } else {
+        blogGrid.classList.remove('hidden');
+        noResults.classList.add('hidden');
+      }
+    });
+  });
+</script>
 </body>
 </html>
