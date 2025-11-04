@@ -9,8 +9,8 @@
 <body>
     <div class="login-container">
         <header>
-            <h2 class="title">Welcome back!</h2>
-            <p class="description">Enter your credentials to access your account</p>
+            <h2 class="title">Welcome!</h2>
+            <p class="description">Enter the required information to create your account</p>
         </header>
 
         <form class="login-form" action="/login" method="POST">
@@ -20,9 +20,12 @@
             <label class="subtitle" for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
             <br>
-            <button type="submit">Login</button>
+            <label class="subtitle" for="password">Confirm Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <br>
+            <button type="submit">Register</button>
 
-            <p class="reghere">Don't have an account? <a href="/register"><span>Register Here</span></a></p>
+            <p class="reghere">Already have an account? <a href="/login.php"><span>Login Here</span></a></p>
         </form>
     </div>
 </body>

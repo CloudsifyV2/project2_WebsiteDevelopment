@@ -22,6 +22,20 @@
         
       <!-- Title -->
       <h1>Example testing title. Idk what to put here</h1>
+      <div class="article-meta">
+        <span class="author">By John Doe</span>
+      </div>
+
+      <div class="tags">
+        <span class="tag">Travel</span>
+        <span class="tag">Adventure</span>
+        <span class="tag">Photography</span>
+      </div>
+      
+      <div class="article-meta">
+        <span class="date">Published on June 15, 2024</span>
+      </div>
+
       <div class="separator"></div>
 
       <!-- Article Content -->
@@ -33,5 +47,17 @@
       </div>
     </article>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggle = document.querySelector('.navbar-toggle');
+        const menu = document.querySelector('.navbar-menu');
+
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+    });
+  </script>
 </body>
 </html>

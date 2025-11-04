@@ -63,3 +63,23 @@ h1 {
     background-color: #e5e7eb;
     margin: 2rem 0;
 }
+
+.article-meta .author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.article-meta .date {
+    display: block;
+    padding-top: 15px;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.tags .tag {
+    background-color: #1f2937;
+    color: #fff;
+    border-radius: 12px;
+    padding: 2px 8px;
+}
