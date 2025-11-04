@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #FFF;
+    width: 100dvw;
+    height: 100dvh;
+    display: grid;
+    place-content: center;
+    font-family: "Inter", sans-serif;
+}
+
+.login-container {
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #FFF;
+    border-radius: 34px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.25);
+    padding: 25px;
+
+    & header {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    & > * {
+        width: 100%;
+    }    
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+    & input {
+        border: 1px solid #000;
+        border-radius: 22px;
+        height: 46px;
+        width: 100%;
+        border-radius: 23px;
+        padding-inline: 23px;
+    }
+    
+    & button {
+        border-radius: 22px;
+        height: 46px;
+        border: none;
+        background: linear-gradient(to right, hsl(221, 83%, 64%), hsl(from hsl(221, 83%, 64%) calc(h - 70) s l));
+        color: #fff;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+        font-weight: 500;
+        font-family: inherit;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+        cursor: pointer;
+    }
+
+    & button:hover {
+        background: linear-gradient(to right, hsl(221, 83%, 54%), hsl(from hsl(221, 83%, 54%) calc(h - 70) s l));
+    }
+}
+
+.title {
+    font-weight: 300;
+    color: #000;
+}
+
+.description {
+    font-weight: 300;
+    color: #bbb;
+}
+
+.subtitle {
+    color: #000;
+    font-weight: 600;
+    padding: 5px;
+}
+
+span {
+    color: #4899AF;
+}
+
+.reghere {
+    font-weight: 300;
+    color: #bbb;
+    padding: 20px;
+    text-align: center;
+}
