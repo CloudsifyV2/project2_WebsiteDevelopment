@@ -1,3 +1,10 @@
+<?php
+// Get first letter of username (fallback to "?" if not set)
+$userInitial = isset($_SESSION['username']) && $_SESSION['username'] !== ''
+    ? strtoupper(substr($_SESSION['username'], 0, 1))
+    : 'Login';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,46 +15,47 @@
 <body>
     <nav class="navbar" id="navbar">
         <div class="navbar-container">
-        <a href="#" class="navbar-logo">
-            <span>Bloggy</span>
-        </a>
-        
-        <ul class="navbar-menu">
-            <li><a href="hub.php" class="active">Home</a></li>
-            <li><a href="#">Create</a></li>
-            <li><a href="#">Find</a></li>
-            <li><a href="#">Manage</a></li>
-        </ul>
+            <a href="hub.php" class="navbar-logo">
+                <span>Bloggy</span>
+            </a>
+            
+            <ul class="navbar-menu">
+                <li><a href="hub.php" class="active">Home</a></li>
+                <li><a href="create_post.php">Create</a></li>
+                <li><a href="#">Find</a></li>
+                <li><a href="#">Manage</a></li>
+            </ul>
 
-        <div class="navbar-actions">
-            <button class="navbar-search" aria-label="Search">
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
+            <div class="navbar-actions">
+                <button class="navbar-search" aria-label="Search">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+                <div class="user-avatar"><?= htmlspecialchars($userInitial) ?></div>
+            </div>
+
+            <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
-            <div class="user-avatar">C</div>
         </div>
+    </nav>
 
-        <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        </div>
-  </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.querySelector('.navbar-toggle');
+            const menu = document.querySelector('.navbar-menu');
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const toggle = document.querySelector('.navbar-toggle');
-        const menu = document.querySelector('.navbar-menu');
-
-        if (toggle && menu) {
-            toggle.addEventListener('click', () => {
-                toggle.classList.toggle('active');
-                menu.classList.toggle('active');
-            });
-        }
-    });
-  </script>
+            if (toggle && menu) {
+                toggle.addEventListener('click', () => {
+                    toggle.classList.toggle('active');
+                    menu.classList.toggle('active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

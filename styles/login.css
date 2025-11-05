@@ -8,13 +8,14 @@ body {
     background: #FFF;
     width: 100dvw;
     height: 100dvh;
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     place-content: center;
     font-family: "Inter", sans-serif;
 }
 
 .login-container {
-    width: 500px;
+    width: min(500px, 100% - 40px);
     height: 600px;
     display: flex;
     flex-direction: column;
