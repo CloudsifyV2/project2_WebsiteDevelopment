@@ -4,7 +4,6 @@ $userInitial = isset($_SESSION['username']) && $_SESSION['username'] !== ''
     ? strtoupper(substr($_SESSION['username'], 0, 1))
     : 'Login';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,11 +18,14 @@ $userInitial = isset($_SESSION['username']) && $_SESSION['username'] !== ''
                 <span>Bloggy</span>
             </a>
             
+            <?php
+            $currentPage = basename($_SERVER['PHP_SELF']);
+            ?>
             <ul class="navbar-menu">
-                <li><a href="hub.php" class="active">Home</a></li>
-                <li><a href="create_post.php">Create</a></li>
-                <li><a href="#">Find</a></li>
-                <li><a href="#">Manage</a></li>
+                <li><a href="hub.php" class="<?= $currentPage === 'hub.php' ? 'active' : '' ?>">Home</a></li>
+                <li><a href="create_post.php" class="<?= $currentPage === 'create_post.php' ? 'active' : '' ?>">Create</a></li>
+                <li><a href="find.php" class="<?= $currentPage === 'find.php' ? 'active' : '' ?>">Find</a></li>
+                <li><a href="manage.php" class="<?= $currentPage === 'manage.php' ? 'active' : '' ?>">Manage</a></li>
             </ul>
 
             <div class="navbar-actions">
@@ -33,7 +35,15 @@ $userInitial = isset($_SESSION['username']) && $_SESSION['username'] !== ''
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </button>
-                <div class="user-avatar"><?= htmlspecialchars($userInitial) ?></div>
+
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar"><?= htmlspecialchars($userInitial) ?></div>
+                    <div class="dropdown-menu" id="userDropdown">
+                        <a href="profile.php">Profile</a>
+                        <a href="settings.php">Settings</a>
+                        <a href="logout.php">Logout</a>
+                    </div>
+                </div>
             </div>
 
             <button class="navbar-toggle" id="navbarToggle" aria-label="Toggle menu">
@@ -48,11 +58,26 @@ $userInitial = isset($_SESSION['username']) && $_SESSION['username'] !== ''
         document.addEventListener('DOMContentLoaded', function () {
             const toggle = document.querySelector('.navbar-toggle');
             const menu = document.querySelector('.navbar-menu');
+            const avatar = document.getElementById('userAvatar');
+            const dropdown = document.getElementById('userDropdown');
 
             if (toggle && menu) {
                 toggle.addEventListener('click', () => {
                     toggle.classList.toggle('active');
                     menu.classList.toggle('active');
+                });
+            }
+
+            if (avatar && dropdown) {
+                avatar.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('show');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!dropdown.contains(e.target) && e.target !== avatar) {
+                        dropdown.classList.remove('show');
+                    }
                 });
             }
         });

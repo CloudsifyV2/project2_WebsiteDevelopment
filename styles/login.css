@@ -99,3 +99,9 @@ span {
 a {
     text-decoration: none;
 }
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}

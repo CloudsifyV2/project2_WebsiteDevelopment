@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +15,13 @@
         </header>
 
         <form class="login-form" action="DO/do_login_check.php" method="POST">
+            <?php if (isset($_SESSION['error'])): ?>
+                <p class="error-message">
+                    <?= htmlspecialchars($_SESSION['error']) ?>
+                </p>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
+
             <label class="subtitle" for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <br>
